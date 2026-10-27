@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catálogo</title>
+<meta name="description" content="Catálogo de productos con delivery. Pide por WhatsApp.">
+<meta property="og:title" content="Catálogo — pide por WhatsApp">
+<meta property="og:description" content="Productos para tu hogar con delivery a domicilio.">
+<style>
+  :root{
+    --bg:#f7f4ef; --card:#fff; --ink:#1d1b18; --muted:#6f6a62; --line:#e7e1d7;
+    --brand:#c2410c; --brand-ink:#fff; --wa:#1f9d55; --soft:#fdeee4;
+    --r:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  header{background:var(--ink);color:#fff;padding:22px 18px 18px}
+  header h1{margin:0;font-size:1.6rem;letter-spacing:-.02em}
+  header p{margin:4px 0 0;color:#cfc8bd;font-size:.95rem}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 14px}
+  .avisos{display:flex;gap:8px;overflow-x:auto;padding:12px 0 2px;scrollbar-width:none}
+  .avisos span{flex:none;background:var(--soft);color:#7c2d12;border-radius:999px;padding:7px 12px;font-size:.82rem}
+  .tools{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0 8px}
+  .search{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:1rem;background:#fff}
+  .chips{display:flex;gap:8px;overflow-x:auto;margin-top:10px;scrollbar-width:none}
+  .chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font-size:.88rem;cursor:pointer}
+  .chip[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:8px 0 110px}
+  @media(min-width:640px){.grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}}
+  .card{background:var(--card);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--line)}
+  .ph{aspect-ratio:1/1;background:linear-gradient(135deg,#fde7d6,#f3efe8);display:grid;place-items:center;font-size:3.4rem;position:relative}
+  .ph img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+  .tag{position:absolute;top:8px;left:8px;background:rgba(29,27,24,.85);color:#fff;font-size:.72rem;padding:4px 8px;border-radius:999px}
+  .body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .name{font-weight:650;font-size:.95rem;line-height:1.25}
+  .desc{color:var(--muted);font-size:.8rem;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .price{font-size:1.2rem;font-weight:750;color:var(--brand);margin-top:auto}
+  .price.ask{font-size:.95rem}
+  .admin{font-size:.75rem;color:#166534;background:#dcfce7;border-radius:8px;padding:4px 8px}
+  .btn{border:0;border-radius:10px;padding:10px 12px;font-weight:650;font-size:.9rem;cursor:pointer}
+  .btn-add{background:var(--ink);color:#fff}
+  .btn-add.in{background:var(--soft);color:#7c2d12}
+  .btn:disabled{background:#e5e1da;color:#9a948a;cursor:not-allowed}
+  .out .ph{filter:grayscale(1);opacity:.6}
+  .empty{text-align:center;color:var(--muted);padding:40px 0}
+  /* bolsa */
+  .bar{position:fixed;left:0;right:0;bottom:0;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--bg) 30%);display:none;z-index:10}
+  .bar.show{display:block}
+  .bar button span{white-space:nowrap}
+  .bar button{gap:10px;width:100%;max-width:520px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;background:var(--wa);color:#fff;border:0;border-radius:14px;padding:15px 18px;font-size:1rem;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.18);cursor:pointer}
+  dialog{border:0;border-radius:18px;padding:0;width:min(520px,94vw);max-height:90vh}
+  dialog::backdrop{background:rgba(0,0,0,.45)}
+  .dl{padding:18px}
+  .dl h2{margin:0 0 12px;font-size:1.2rem}
+  .row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .row .n{flex:1;font-size:.92rem}
+  .qty{display:flex;align-items:center;gap:6px}
+  .qty button{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:#fff;font-size:1rem;cursor:pointer}
+  .total{display:flex;justify-content:space-between;font-weight:750;padding:12px 0 4px;font-size:1.05rem}
+  .note{color:var(--muted);font-size:.8rem;margin:0 0 12px}
+  label{display:block;font-size:.85rem;margin:10px 0 4px;color:var(--muted)}
+  input,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit}
+  .actions{display:flex;gap:10px;margin-top:16px}
+  .actions .btn{flex:1}
+  .btn-wa{background:var(--wa);color:#fff}
+  .btn-ghost{background:#f1ede6;color:var(--ink)}
+  footer{text-align:center;color:var(--muted);font-size:.8rem;padding:0 0 120px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1 id="t-nombre"></h1>
+    <p id="t-eslogan"></p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="avisos" id="avisos"></div>
+  <div class="tools">
+    <input class="search" id="q" type="search" placeholder="Buscar producto…" autocomplete="off">
+    <div class="chips" id="chips"></div>
+  </div>
+  <div id="adminInfo"></div>
+  <main class="grid" id="grid"></main>
+</div>
+
+<footer id="pie"></footer>
+
+<div class="bar" id="bar"><button id="openBag"><span id="barTxt"></span><span>Pedir →</span></button></div>
+
+<dialog id="bag">
+  <div class="dl">
+    <h2>Tu pedido</h2>
+    <div id="items"></div>
+    <div class="total"><span>Total productos</span><span id="tot"></span></div>
+    <p class="note">El delivery se cobra aparte según la distancia. Te confirmamos el monto por WhatsApp.</p>
+    <label for="nom">Tu nombre</label>
+    <input id="nom" autocomplete="name">
+    <label for="dir">Distrito / dirección de entrega</label>
+    <textarea id="dir" rows="2"></textarea>
+    <div class="actions">
+      <button class="btn btn-ghost" id="closeBag">Seguir viendo</button>
+      <button class="btn btn-wa" id="send">Enviar por WhatsApp</button>
+    </div>
+  </div>
+</dialog>
+
+<script src="config.js"></script>
+<script src="productos.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
