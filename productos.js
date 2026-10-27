@@ -1,8 +1,9 @@
 // =============================================================
 //  PRODUCTOS  —  para agregar uno, copia un bloque { ... }, y cambia los datos.
 //
-//  foto:       nombre del archivo dentro de la carpeta "img" (ej: "zapatero.jpg").
-//              Si la dejas vacía "", se muestra un dibujo con el emoji.
+//  foto:       la foto va en la carpeta "img" con el MISMO nombre que el id:
+//              ej. img/zapatero-madera.jpg  → aparece sola, no hay que escribir nada.
+//              (Si quieres otro nombre de archivo, ponlo aquí: foto: "mi-foto.png")
 //  precio:     tu precio de venta (lo que ve el cliente).
 //  costo:      lo que te cuesta en la tienda. NO se muestra al cliente;
 //              sirve para calcular tu ganancia en el modo vendedora (?admin).
@@ -15,7 +16,6 @@ const PRODUCTOS = [
     categoria: "Hogar",
     precio: 95,
     costo: 70,
-    emoji: "🛋️",
     foto: "",
     disponible: true,
     descripcion:
@@ -27,7 +27,6 @@ const PRODUCTOS = [
     categoria: "Hogar",
     precio: 85,
     costo: 0,
-    emoji: "👟",
     foto: "",
     disponible: true,
     descripcion: "Organiza tus zapatos y ahorra espacio. Resistente y fácil de armar.",
@@ -38,7 +37,6 @@ const PRODUCTOS = [
     categoria: "Hogar",
     precio: 90,
     costo: 0,
-    emoji: "🌀",
     foto: "",
     disponible: true,
     descripcion: "Ventilador de pie, mesa y pared. Perfecto para el verano.",
@@ -49,7 +47,6 @@ const PRODUCTOS = [
     categoria: "Belleza",
     precio: 0, // ← pon el precio
     costo: 0,
-    emoji: "🪞",
     foto: "",
     disponible: true,
     descripcion: "Espejo de mesa con luz, diseño de gatito. Práctico, lindo y funcional.",
@@ -60,7 +57,6 @@ const PRODUCTOS = [
     categoria: "Tecnología",
     precio: 100,
     costo: 0,
-    emoji: "🔊",
     foto: "",
     disponible: true,
     descripcion: "Sonido potente, conexión Bluetooth y batería recargable.",
@@ -71,7 +67,6 @@ const PRODUCTOS = [
     categoria: "Tecnología",
     precio: 140,
     costo: 0,
-    emoji: "🎮",
     foto: "",
     disponible: true,
     descripcion: "Miles de juegos clásicos, 2 mandos inalámbricos. Se conecta a la TV por HDMI.",
