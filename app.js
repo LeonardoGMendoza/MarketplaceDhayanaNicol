@@ -42,14 +42,16 @@
   function card(p) {
     const inBag = bag[p.id];
     const precio = p.precio > 0 ? money(p.precio) : "Consultar precio";
-    const foto = p.foto ? `<img src="img/${esc(p.foto)}" alt="${esc(p.nombre)}" loading="lazy">` : "";
+    // Si "foto" está vacío, busca automáticamente img/<id>.jpg
+    const archivo = p.foto || `${p.id}.jpg`;
+    const foto = `<img src="img/${esc(archivo)}" alt="${esc(p.nombre)}" loading="lazy" onerror="this.remove()">`;
     const admin = isAdmin && p.costo > 0 && p.precio > 0
       ? `<span class="admin">Costo ${money(p.costo)} · Ganas <b>${money(p.precio - p.costo)}</b></span>` : "";
     const btn = !p.disponible
       ? `<button class="btn" disabled>Agotado</button>`
       : `<button class="btn btn-add ${inBag ? "in" : ""}" data-add="${esc(p.id)}">${inBag ? `✓ En tu pedido (${inBag})` : "Lo quiero"}</button>`;
     return `<article class="card ${p.disponible ? "" : "out"}">
-      <div class="ph">${esc(p.emoji || "🛍️")}${foto}<span class="tag">${esc(p.categoria)}</span></div>
+      <div class="ph"><span class="nofoto">Foto pronto</span>${foto}<span class="tag">${esc(p.categoria)}</span></div>
       <div class="body">
         <div class="name">${esc(p.nombre)}</div>
         <div class="desc">${esc(p.descripcion || "")}</div>

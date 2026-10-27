@@ -9,7 +9,7 @@ Sirve para pegar el link en Marketplace, en estados de WhatsApp y en grupos.
 |---|---|---|
 | Poner mi número de WhatsApp, nombre de la tienda | `config.js` | Cambio `whatsapp: "51…"` y `nombre` |
 | Agregar un producto | `productos.js` | Copio un bloque `{ … },` y cambio nombre, precio, descripción |
-| Poner foto | carpeta `img/` | Subo la foto (ej. `zapatero.jpg`) y en el producto pongo `foto: "zapatero.jpg"` |
+| Poner foto | carpeta `img/` | Subo la foto con el nombre del `id` del producto, ej. `img/zapatero-madera.jpg` — aparece sola |
 | Producto agotado | `productos.js` | `disponible: false` |
 | Ver mi ganancia | navegador | Abro el link con `?admin` al final → muestra costo y ganancia (el cliente no lo ve) |
 
